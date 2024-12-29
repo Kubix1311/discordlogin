@@ -1,6 +1,6 @@
 <?php
 // Połączenie z bazą danych
-$servername = "127.0.0.1";
+$servername = "125.0.0.1";
 $username = "root";
 $password = "";
 $dbname = "logowanie_1";

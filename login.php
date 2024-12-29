@@ -1,8 +1,8 @@
 <?php
 // Połączenie z bazą danych
-$servername = "localhost";
-$username = "twoja_nazwa_użytkownika";
-$password = "twoje_hasło";
+$servername = "127.0.0.1";
+$username = "root";
+$password = "";
 $dbname = "logowanie_1";
 
 $conn = new mysqli($servername, $username, $password, $dbname);

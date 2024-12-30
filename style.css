@@ -1,0 +1,61 @@
+body {
+    background-color: #36393F;
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    background-color: #202225;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); /* Dodano cień tekstu */
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #40444B;
+    color: #fff;
+    border-bottom: 2px solid #5865F2; /* Podkreślenie pola wejściowego */
+}
+
+input:focus {
+    outline: none;
+    border-bottom: 2px solid #fff; /* Zmiana koloru podkreślenia przy fokusowaniu */
+}
+
+button {
+    background-color: #5865F2;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease; /* Dodano przejście dla efektu "hover" */
+}
+
+button:hover {
+    background-color: #4652B4; /* Zmiana koloru tła przy "hover" */
+}

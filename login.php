@@ -1,49 +1,38 @@
 <?php
-// Połączenie z bazą danych
-$servername = "127.0.0.1";
-$username = "root"; // Zmień na swoją nazwę użytkownika
-$password = ""; // Zmień na swoje hasło
-$dbname = "logowanie_1";
+session_start();
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Konfiguracja bazy danych
+$host = '125.0.0.1';
+$dbname = 'example_db';
+$username = 'root'; // Użytkownik bazy danych
+$password = '';     // Hasło bazy danych
 
-// Sprawdzenie połączenia
-if ($conn->connect_error) {
-    die("Błąd połączenia: " . $conn->connect_error);
+try {
+    // Połączenie z bazą danych
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Connection failed: " . $e->getMessage());
 }
 
-// Sprawdzenie, czy formularz został wysłany
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Pobranie danych z formularza
-    $username = $_POST["username"];
-    $password = $_POST["password"];
+// Obsługa żądania POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $user = $_POST['username'];
+    $pass = $_POST['password'];
 
-    // Szyfrowanie hasła
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    // Sprawdzenie danych użytkownika
+    $stmt = $pdo->prepare('SELECT * FROM users WHERE username = :username AND password = MD5(:password)');
+    $stmt->execute(['username' => $user, 'password' => $pass]);
+    $user = $stmt->fetch();
 
-    // Wstawienie danych do bazy
-    $sql = "INSERT INTO logowanie_1 (username, password) VALUES ('$username', '$password')";
-    if ($conn->query($sql) === TRUE) {
-        echo "Rejestracja zakończona sukcesem!";
+    if ($user) {
+        // Zalogowano poprawnie
+        $_SESSION['username'] = $user['username'];
+        header('Location: welcome.php');
+        exit;
     } else {
-        echo "Błąd: " . $sql . "<br>" . $conn->error;
+        // Nieprawidłowe dane logowania
+        echo '<p style="color: red;">Invalid username or password</p>';
     }
 }
-
-// Wyświetlenie zarejestrowanych użytkowników
-$sql = "SELECT username FROM logowanie_1";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    echo "<h2>Lista zarejestrowanych użytkowników:</h2>";
-    echo "<ul>";
-    while ($row = $result->fetch_assoc()) {
-        echo "<li>" . $row["username"] . "</li>";
-    }
-    echo "</ul>";
-} else {
-    echo "Brak zarejestrowanych użytkowników.";
-}
-
-$conn->close();
 ?>

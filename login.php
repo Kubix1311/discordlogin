@@ -2,8 +2,8 @@
 session_start();
 
 // Konfiguracja bazy danych
-$host = '125.0.0.1';
-$dbname = 'example_db';
+$host = '127.0.0.1';
+$dbname = 'logowanie_dsc';
 $username = 'root'; // Użytkownik bazy danych
 $password = '';     // Hasło bazy danych
 
